@@ -162,7 +162,7 @@ function App() {
       <header className="app-header">
         <div className="logo-container">
           <img src={logo} alt="Sculptor Translate Logo" className="app-logo" />
-          <h1>Sculptor Translate</h1>
+          <h1> <strong> Sculptor Translate </strong> </h1>
         </div>
       </header>
 
