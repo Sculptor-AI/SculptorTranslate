@@ -1,0 +1,178 @@
+/* App.css */
+:root {
+  --primary-color: #4285f4;
+  --secondary-color: #3aaafa;
+  --text-color: #333;
+  --light-gray: #f1f1f1;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+}
+
+body {
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: var(--text-color);
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-logo {
+  height: 40px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.translation-container {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  overflow: hidden;
+}
+
+.language-controls {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.language-selectors {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-selector {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.swap-button {
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.swap-button:hover {
+  background-color: var(--light-gray);
+}
+
+.translation-boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 300px;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+.input-box {
+  border-right: 1px solid var(--border-color);
+}
+
+.text-area {
+  flex: 1;
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  min-height: 250px;
+  background-color: white;
+  font-family: inherit;
+}
+
+.result-area {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  overflow-y: auto;
+}
+
+.text-box-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+}
+
+.character-count {
+  font-size: 14px;
+  color: #666;
+}
+
+.copy-button {
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.copy-button:hover {
+  background-color: var(--light-gray);
+}
+
+.copy-button:disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .translation-boxes {
+    grid-template-columns: 1fr;
+  }
+  
+  .input-box {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .text-area {
+    min-height: 150px;
+  }
+}
