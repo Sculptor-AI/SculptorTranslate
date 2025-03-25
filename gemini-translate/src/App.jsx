@@ -12,9 +12,10 @@ function App() {
   const [targetLanguage, setTargetLanguage] = useState('spanish');
   const [isTranslating, setIsTranslating] = useState(false);
   const [characterCount, setCharacterCount] = useState(0);
-  const maxCharacters = 900;
+  const [copySuccess, setCopySuccess] = useState(false);
+  const maxCharacters = 1000;
 
-  // Update languages array to include Latin
+  // Available languages
   const languages = ['detect', 'english', 'spanish', 'chinese', 'latin'];
 
   // Update character count when input changes
@@ -22,15 +23,35 @@ function App() {
     setCharacterCount(inputText.length);
   }, [inputText]);
 
-  // Manual translation trigger function (for buttons if needed)
-  const triggerTranslation = () => {
-    if (inputText.trim() && inputText.length <= maxCharacters) {
-      // Force immediate translation without debounce
-      setIsTranslating(true);
-      console.log('Manual translation trigger');
+  // Handle copy success message timeout
+  useEffect(() => {
+    if (copySuccess) {
+      const timer = setTimeout(() => {
+        setCopySuccess(false);
+      }, 2000);
+      return () => clearTimeout(timer);
     }
-  };
-  
+  }, [copySuccess]);
+
+  // Reset progress bar when translation completes
+  useEffect(() => {
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+      if (isTranslating) {
+        progressBar.style.width = '0%';
+        // Force a reflow before setting the new width
+        void progressBar.offsetWidth;
+        progressBar.style.width = '100%';
+      } else {
+        progressBar.style.width = '0%';
+        progressBar.style.transition = 'none';
+        // Force a reflow before restoring the transition
+        void progressBar.offsetWidth;
+        progressBar.style.transition = 'width 20s cubic-bezier(0.1, 0.05, 0.2, 1)';
+      }
+    }
+  }, [isTranslating]);
+
   // Debounce translation
   useEffect(() => {
     // Don't run on first render or when input is empty
@@ -112,11 +133,18 @@ function App() {
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text)
       .then(() => {
-        alert('Text copied to clipboard!');
+        setCopySuccess(true);
       })
       .catch(err => {
         console.error('Failed to copy text: ', err);
       });
+  };
+
+  // Get character count class based on limit
+  const getCharCountClass = () => {
+    if (characterCount >= maxCharacters) return 'character-count at-limit';
+    if (characterCount >= maxCharacters * 0.9) return 'character-count near-limit';
+    return 'character-count';
   };
 
   // Event handlers
@@ -138,9 +166,9 @@ function App() {
         </div>
       </header>
 
-      <main className="translation-container">
+      <main className={`translation-container ${isTranslating ? 'translating' : ''}`}>
         <div className="language-controls">
-          <div className="language-selectors">
+          <div className="language-selector-container">
             <select 
               value={sourceLanguage} 
               onChange={handleSourceLanguageChange} 
@@ -152,7 +180,9 @@ function App() {
                 </option>
               ))}
             </select>
-
+          </div>
+          
+          <div className="swap-button-container">
             <button 
               className="swap-button" 
               onClick={swapLanguages}
@@ -161,7 +191,9 @@ function App() {
             >
               <SwapOutlined />
             </button>
-
+          </div>
+          
+          <div className="language-selector-container">
             <select 
               value={targetLanguage} 
               onChange={handleTargetLanguageChange} 
@@ -183,10 +215,10 @@ function App() {
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Enter text to translate"
               maxLength={maxCharacters}
-              className="text-area"
+              className="text-area input-area"
             />
             <div className="text-box-footer">
-              <span className="character-count">
+              <span className={getCharCountClass()}>
                 {characterCount} / {maxCharacters}
               </span>
             </div>
@@ -194,13 +226,14 @@ function App() {
 
           <div className="text-box output-box">
             <div className="text-area result-area">
-              {isTranslating ? 'Translating...' : translatedText}
+              {isTranslating ? 'Translating' : translatedText}
             </div>
+            <div className="progress-bar"></div>
             <div className="text-box-footer">
               <button 
                 className="copy-button" 
                 onClick={() => copyToClipboard(translatedText)}
-                disabled={!translatedText}
+                disabled={!translatedText || isTranslating}
                 aria-label="Copy translation"
               >
                 <CopyOutlined /> Copy
@@ -208,6 +241,12 @@ function App() {
             </div>
           </div>
         </div>
+        
+        {copySuccess && (
+          <div className="copy-success show">
+            Copied to clipboard!
+          </div>
+        )}
       </main>
     </div>
   );
