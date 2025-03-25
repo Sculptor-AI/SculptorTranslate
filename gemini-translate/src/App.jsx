@@ -16,7 +16,7 @@ function App() {
   const maxCharacters = 1000;
 
   // Available languages
-  const languages = ['detect', 'english', 'spanish', 'chinese', 'latin'];
+  const languages = ['detect', 'english', 'spanish', 'chinese', 'latin', 'french', 'swedish'];
 
   // Update character count when input changes
   useEffect(() => {
