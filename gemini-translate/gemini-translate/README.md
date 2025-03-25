@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# Sculptor Translate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sculptor Translate is a web application that leverages the Gemini API to provide real-time translation between multiple languages.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+-   Real-time translation using the Gemini API.
+-   Support for multiple languages: English, Spanish, Chinese, Latin, French, and Swedish.
+-   Automatic language detection.
+-   User-friendly interface with clear input and output boxes.
+-   Character count for input text with near-limit and at-limit indicators.
+-   Copy to clipboard functionality for translated text.
+-   Responsive design for use on various devices.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   React
+-   Gemini API
+-   Ant Design Icons
+-   CSS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Setup Instructions
 
-### `npm test`
+1.  **Clone the repository:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    ```bash
+    git clone [repository URL]
+    cd gemini-translate
+    ```
 
-### `npm run build`
+2.  **Install dependencies:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```bash
+    npm install
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3.  **Configure environment variables:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    -   Create a [.env](http://_vscodecontentref_/1) file in the project root directory.
+    -   Add your Gemini API key:
 
-### `npm run eject`
+        ```
+        REACT_APP_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+        ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    -   *(Optional)* Customize the character limit and translation debounce time:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+        ```
+        REACT_APP_MAX_CHAR_LIMIT=5000
+        REACT_APP_TRANSLATION_DEBOUNCE_MS=800
+        ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4.  **Start the application:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```bash
+    npm start
+    ```
 
-## Learn More
+    The application will be available at `http://localhost:3000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Environment Variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   [REACT_APP_GEMINI_API_KEY](http://_vscodecontentref_/2): Your Gemini API key.  **Required.**
+-   `REACT_APP_MAX_CHAR_LIMIT`:  Maximum number of characters allowed in the input text.  Defaults to 5000 if not set.
+-   `REACT_APP_TRANSLATION_DEBOUNCE_MS`:  Debounce time in milliseconds for the translation function.  Defaults to 800ms if not set.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1.  Select the source and target languages from the dropdown menus.  "Detect language" can be selected as the source language to automatically detect the language of the input text.
+2.  Enter the text you want to translate in the input text area.
+3.  The translated text will appear in the output text area in real-time.
+4.  Click the "Copy" button to copy the translated text to your clipboard.
+5.  Use the swap button to swap the source and target languages.
 
-### Analyzing the Bundle Size
+## Debugging
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The application includes a debug function to test the Gemini API directly.  Open the browser console and call [window.debugGeminiAPI()](http://_vscodecontentref_/3) to run the debug test.  This will check the environment variables and test basic API connectivity.
