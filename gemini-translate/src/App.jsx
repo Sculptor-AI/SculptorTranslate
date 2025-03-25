@@ -133,8 +133,8 @@ function App() {
     <div className="app-container">
       <header className="app-header">
         <div className="logo-container">
-          <img src={logo} alt="G(emini) Translate Logo" className="app-logo" />
-          <h1>G(emini) Translate</h1>
+          <img src={logo} alt="Sculptor Translate Logo" className="app-logo" />
+          <h1>Sculptor Translate</h1>
         </div>
       </header>
 
