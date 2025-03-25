@@ -1,0 +1,1187 @@
+/* App.css - Complete File with Enhanced Animation */
+:root {
+  --primary-color: #8A2BE2; /* Purple */
+  --secondary-color: #FF5E93; /* Pink */
+  --accent-blue: #4285f4; /* Google Blue */
+  --apple-blue: #0070F3; /* Apple Blue */
+  --light-purple: #b68aff;
+  --light-teal: #42d7d7;
+  --vibrant-pink: #FF00FF;
+  --bright-blue: #00C9FF;
+  --deep-purple: #4B0082; /* Deep purple for deep translate mode */
+  --deep-magenta: #ff00e1; /* Magenta for deep translate mode */
+  --deep-indigo: #3a007d; /* Indigo for deep translate mode */
+  --neon-blue: #00f7ff; /* Bright neon blue highlight */
+  --neon-purple: #aa77ff; /* Bright neon purple highlight */
+  --text-color: #333333;
+  --light-text: #757575;
+  --very-light-text: #aaaaaa;
+  --light-bg: #ffffff;
+  --card-bg: #f8f9fa;
+  --border-color: #e0e0e0;
+  --input-bg: #f5f5f5;
+  --output-bg: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.2s;
+}
+
+/* Animation Keyframes */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.7;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.7;
+  }
+}
+
+/* Deep translate mode gradient animation */
+@keyframes deep-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3), 
+                0 0 20px rgba(66, 133, 244, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.5), 
+                0 0 50px rgba(66, 133, 244, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3), 
+                0 0 20px rgba(66, 133, 244, 0.2);
+  }
+}
+
+/* Enhanced Deep translate glow pulse with neon colors */
+@keyframes deep-glow-pulse {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 0, 225, 0.4), 
+                0 0 30px rgba(75, 0, 130, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 0, 225, 0.7), 
+                0 0 70px rgba(75, 0, 130, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(255, 0, 225, 0.4), 
+                0 0 30px rgba(75, 0, 130, 0.3);
+  }
+}
+
+/* Toggle switch animation */
+@keyframes toggle-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Animation for shining gradient across translating text */
+@keyframes shine {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Dropdown animation */
+@keyframes dropdown-open {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tooltip animation */
+@keyframes tooltip-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced shimmer for deep mode */
+@keyframes deep-shimmer {
+  0% {
+    left: -50%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+/* New aurora effect for deep mode */
+@keyframes aurora-effect {
+  0% {
+    opacity: 0.3;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  50% {
+    opacity: 0.7;
+    filter: hue-rotate(45deg) saturate(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+}
+
+/* Badge animation */
+@keyframes badge-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 0, 225, 0.7); }
+  100% { transform: scale(1); }
+}
+
+@keyframes border-highlight {
+  0% {
+    filter: blur(0.5px) brightness(1);
+  }
+  50% {
+    filter: blur(1px) brightness(1.3);
+  }
+  100% {
+    filter: blur(0.5px) brightness(1);
+  }
+}
+
+/* Enhanced deep border highlight */
+@keyframes deep-border-highlight {
+  0% {
+    filter: blur(0.5px) brightness(1);
+  }
+  50% {
+    filter: blur(2px) brightness(1.7);
+  }
+  100% {
+    filter: blur(0.5px) brightness(1);
+  }
+}
+
+/* Base Styles */
+body {
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.app-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* Header Styles */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-logo {
+  height: 32px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+/* Translation Container */
+.translation-container {
+  position: relative;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Gradient border effect during translation */
+.translation-container.translating {
+  border-color: transparent;
+}
+
+.translation-container.translating::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(
+    135deg, 
+    var(--vibrant-pink),
+    var(--primary-color),
+    var(--accent-blue),
+    var(--bright-blue),
+    var(--light-teal),
+    var(--vibrant-pink)
+  );
+  background-size: 300% 300%;
+  border-radius: calc(var(--border-radius) + 3px);
+  z-index: -1;
+  animation: 
+    gradient-flow 3s ease infinite,
+    border-highlight 2s alternate infinite;
+}
+
+/* Enhanced Deep translation mode gradient */
+.translation-container.translating.deep-mode::before {
+  background: linear-gradient(
+    135deg, 
+    var(--deep-magenta),
+    var(--deep-purple),
+    var(--neon-blue),
+    var(--deep-indigo),
+    var(--neon-purple),
+    var(--deep-magenta)
+  );
+  background-size: 300% 300%;
+  animation: 
+    deep-gradient-flow 2.5s ease infinite,
+    deep-border-highlight 1.5s alternate infinite;
+}
+
+/* Soft outer glow */
+.translation-container.translating {
+  animation: glow-pulse 1.5s infinite;
+}
+
+/* Enhanced Deep mode glow */
+.translation-container.translating.deep-mode {
+  animation: deep-glow-pulse 1.5s infinite;
+}
+
+/* White background mask to show only the border */
+.translation-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--light-bg);
+  border-radius: var(--border-radius);
+  z-index: -1;
+}
+
+/* Full-container shimmer effect - modified to appear immediately */
+.translation-container.translating .translation-boxes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%; /* Start closer to visible area */
+  width: 100%; /* Make wider to be more visible */
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(138, 43, 226, 0.12),
+    rgba(66, 133, 244, 0.18),
+    rgba(138, 43, 226, 0.12),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shimmer 1.5s ease-in-out infinite; /* Faster animation */
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Enhanced Deep mode shimmer effect with aurora effect */
+.translation-container.translating.deep-mode .translation-boxes::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 247, 255, 0.15),
+    rgba(255, 0, 225, 0.25),
+    rgba(170, 119, 255, 0.2),
+    transparent
+  );
+  width: 150%;
+  transform: skewX(-20deg);
+  animation: deep-shimmer 2s ease-in-out infinite;
+  filter: blur(3px);
+}
+
+/* Aurora effect overlay for deep mode */
+.translation-container.translating.deep-mode .translation-boxes::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 225, 0.05),
+    rgba(0, 247, 255, 0.08),
+    rgba(170, 119, 255, 0.05)
+  );
+  background-size: 200% 200%;
+  animation: aurora-effect 4s alternate infinite;
+  pointer-events: none;
+  z-index: 9;
+}
+
+/* Deep translate badge - repositioned to output box */
+.deep-translate-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, var(--deep-purple), var(--deep-magenta));
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+  z-index: 20;
+  box-shadow: 0 0 10px rgba(255, 0, 225, 0.4);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+/* Updated Translating text with gradient effect */
+.translating-text {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  user-select: none;
+  transition: opacity 0.3s;
+}
+
+/* Gradient overlay effect */
+.translating-text::before {
+  content: 'Translating';
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 2s linear infinite;
+  pointer-events: none;
+}
+
+/* Remove the dots animation that was there before */
+.translating-text::after {
+  content: none;
+}
+
+/* Thinking dropdown styles */
+.thinking-dropdown {
+  margin-top: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  animation: dropdown-open 0.3s ease-out;
+}
+
+/* Latest translation attempt inside dropdown */
+.latest-attempt {
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+  color: var(--very-light-text);
+  font-size: 0.95em;
+  white-space: pre-wrap; /* Preserve line breaks */
+  line-height: 1.6;
+  animation: dropdown-open 0.2s ease-out;
+}
+
+/* Deep translate progress indicators */
+.deep-progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 11;
+  overflow: hidden; /* Ensure gradient stays within bounds */
+  /* Add slight inner shadow for depth */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.deep-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(
+    to right,
+    var(--deep-magenta),
+    var(--neon-blue),
+    var(--neon-purple),
+    var(--deep-magenta)
+  );
+  background-size: 200% 100%;
+  animation: deep-gradient-flow 2s linear infinite;
+  /* Use more sophisticated easing function */
+  transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  position: relative;
+  /* Add subtle shadow for elevation */
+  box-shadow: 0 0 8px rgba(170, 0, 255, 0.3);
+  /* Prevent subpixel rendering issues */
+  transform: translateZ(0);
+  will-change: width;
+}
+
+/* Add moving light effect to progress bar */
+.deep-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  transform: translateX(100%);
+}
+
+.deep-step-indicator {
+  position: absolute;
+  top: 12.5px;          /* Changed from bottom: 40px to top: 10px */
+  right: 15px;
+  background-color: rgba(58, 0, 125, 0.85);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  z-index: 15;       /* Increased z-index to ensure it appears above other elements */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Language Controls */
+.language-controls {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background-color: var(--light-bg);
+}
+
+.language-selector-container {
+  flex: 1;
+  padding: 10px;
+  position: relative;
+}
+
+.language-selector {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px top 50%;
+  background-size: 10px auto;
+  padding-right: 30px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.language-selector:hover, .language-selector:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.language-selector:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.swap-button-container {
+  display: flex;
+  justify-content: center;
+  width: 50px;
+}
+
+/* Fixed swap button to prevent cursor issues */
+.swap-button {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  cursor: pointer !important; /* Force pointer cursor */
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.swap-button:hover:not(:disabled) {
+  background-color: rgba(138, 43, 226, 0.1);
+  transform: rotate(180deg);
+  cursor: pointer !important; /* Ensure cursor remains a pointer on hover */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.swap-button:active:not(:disabled) {
+  transform: rotate(180deg) scale(0.95);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.swap-button:disabled {
+  opacity: 0.5;
+  cursor: default !important; /* Use default instead of not-allowed */
+}
+
+/* Translation Boxes */
+.translation-boxes {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 200px;
+  border-top: 1px solid var(--border-color);
+}
+
+.text-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 200px;
+}
+
+.input-box {
+  border-right: 1px solid var(--border-color);
+}
+
+.text-area {
+  flex: 1;
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  min-height: 200px;
+  font-family: inherit;
+  height: calc(100% - 45px); /* Adjust to ensure alignment */
+  transition: opacity 0.3s;
+}
+
+.text-area:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.input-area {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.input-area::placeholder {
+  color: #999;
+}
+
+.result-area {
+  background-color: var(--output-bg);
+  color: var(--text-color);
+  position: relative;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+
+/* Footer for text boxes */
+.text-box-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: var(--light-bg);
+  border-top: 1px solid var(--border-color);
+  height: 25px; /* Fixed height to ensure alignment */
+}
+
+.character-count {
+  font-size: 14px;
+  color: var(--light-text);
+}
+
+.character-count.near-limit {
+  color: #FFA000;
+}
+
+.character-count.at-limit {
+  color: #D32F2F;
+}
+
+/* Translate button for deep mode */
+.translate-button {
+  background-color: var(--deep-purple);
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.translate-button:hover:not(:disabled) {
+  background-color: var(--deep-magenta);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.translate-button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.translate-button:disabled {
+  background-color: #9370DB;
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.copy-button {
+  background-color: #E0E0E0;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.copy-button:hover:not(:disabled) {
+  background-color: #D0D0D0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.copy-button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.copy-button:disabled {
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* Deep Translate Toggle - Moved to footer */
+.deep-translate-toggle-container {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.deep-translate-label-text {
+  font-size: 14px;
+  margin-right: 6px;
+  color: var(--text-color);
+  cursor: default;
+}
+
+.deep-translate-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;  /* Slightly smaller than before */
+  height: 20px; /* Slightly smaller than before */
+  margin: 0 6px;
+  /* Add physical weight simulation */
+  transform-origin: center;
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+/* Toggle animation */
+.deep-translate-switch.toggle-animate {
+  animation: toggle-bounce 0.3s ease;
+}
+
+.deep-translate-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.deep-translate-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+  border-radius: 34px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); /* Inset shadow for depth */
+}
+
+.deep-translate-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; /* Adjusted for smaller switch */
+  width: 16px;  /* Adjusted for smaller switch */
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Shadow for physical depth */
+}
+
+input:checked + .deep-translate-slider {
+  background-color: var(--deep-purple);
+}
+
+input:focus + .deep-translate-slider {
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 0 4px var(--deep-purple);
+}
+
+input:checked + .deep-translate-slider:before {
+  transform: translateX(16px); /* Adjusted for smaller switch */
+}
+
+/* Add hover effect for more interactive feel */
+.deep-translate-switch:hover .deep-translate-slider {
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Tooltip container and icon */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.deep-info-icon {
+  font-size: 14px; /* Smaller icon */
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.deep-info-icon:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Custom tooltip that can be shown on click */
+.custom-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: -10px;
+  width: 250px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  padding: 0;
+  z-index: 100;
+  animation: tooltip-fade-in 0.2s ease;
+  transform-origin: bottom right;
+  font-size: 13px;
+  color: #333;
+}
+
+.tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f5f5f5;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tooltip-close {
+  cursor: pointer;
+  color: #777;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+
+.tooltip-close:hover {
+  color: #333;
+}
+
+.custom-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 13px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.custom-tooltip p {
+  margin: 12px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.custom-tooltip ul {
+  margin: 0 0 12px 0;
+  padding-left: 30px;
+}
+
+.custom-tooltip li {
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.copy-success {
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  z-index: 12;
+}
+
+.copy-success.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Standard progress bar - for regular translation mode only */
+.standard-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(to right, 
+    var(--vibrant-pink), 
+    var(--accent-blue), 
+    var(--light-teal), 
+    var(--vibrant-pink)
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: gradient-flow 2s linear infinite;
+}
+
+.translating:not(.deep-mode) .standard-progress-bar {
+  opacity: 1;
+  width: 100%;
+  transition: width 6s cubic-bezier(0.1, 0.05, 0.2, 1);
+}
+
+/* Deep translate warning modal */
+.deep-translate-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.deep-translate-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease;
+  transform-origin: center;
+}
+
+@keyframes modalSlideIn {
+  from { 
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.deep-translate-modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.deep-translate-modal-header svg {
+  color: #ff9800;
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.deep-translate-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.deep-translate-modal-body {
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.deep-translate-modal-body p {
+  margin-bottom: 10px;
+}
+
+.deep-translate-modal-body ul {
+  margin-top: 0;
+  padding-left: 20px;
+}
+
+.deep-translate-modal-body li {
+  margin-bottom: 5px;
+}
+
+.deep-translate-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.deep-translate-modal-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.deep-translate-modal-button.primary {
+  background-color: var(--deep-purple);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.deep-translate-modal-button.primary:hover {
+  background-color: rgba(75, 0, 130, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.deep-translate-modal-button.primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.deep-translate-modal-button.secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.deep-translate-modal-button.secondary:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+.deep-translate-modal-button.secondary:active {
+  transform: translateY(1px);
+}
+
+.deep-translate-modal-checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.deep-translate-modal-checkbox input {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.deep-translate-modal-checkbox label {
+  cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .translation-boxes {
+    grid-template-columns: 1fr;
+  }
+  
+  .input-box {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .language-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .language-selector-container {
+    width: 100%;
+  }
+  
+  .swap-button-container {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .deep-translate-badge {
+    position: absolute;
+    top: 10px;
+    right: 140px;      /* Adjusted to not overlap with the step indicator */
+    background: linear-gradient(135deg, var(--deep-purple), var(--deep-magenta));
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 12px;
+    z-index: 20;
+    box-shadow: 0 0 10px rgba(255, 0, 225, 0.4);
+    animation: badge-pulse 2s ease-in-out infinite;
+  }
+  
+  .deep-step-indicator {
+    bottom: auto;
+    top: 10px;
+    left: 10px;
+    right: auto;
+  }
+  
+  .custom-tooltip {
+    width: 200px;
+    right: -50px;
+  }
+  
+  .custom-tooltip::after {
+    right: 53px;
+  }
+  
+  .thinking-dropdown {
+    margin-top: 12px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .language-selector {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .text-area {
+    padding: 12px;
+    font-size: 15px;
+  }
+  
+  .text-box-footer {
+    padding: 8px 12px;
+  }
+  
+  .deep-step-indicator {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .deep-translate-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  
+  .deep-translate-label-text {
+    font-size: 12px;
+  }
+}
