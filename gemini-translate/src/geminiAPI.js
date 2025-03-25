@@ -146,6 +146,213 @@ export const translateWithGemini = async (text, sourceLanguage, targetLanguage) 
 };
 
 /**
+ * Performs deep translation by generating multiple variants and selecting the best one
+ * @param {string} text - Text to translate
+ * @param {string} sourceLanguage - Source language
+ * @param {string} targetLanguage - Target language
+ * @param {Function} progressCallback - Callback function for progress updates
+ * @returns {Promise<string>} - Best translated text
+ */
+export const deepTranslateWithGemini = async (text, sourceLanguage, targetLanguage, progressCallback) => {
+  if (!text.trim()) return '';
+  
+  // Don't translate if source and target are the same
+  if (sourceLanguage === targetLanguage) {
+    return text;
+  }
+  
+  // Make sure API key is set
+  if (!GEMINI_API_KEY) {
+    console.error('Gemini API key not set. Please check your .env file.');
+    return 'API key not configured. Cannot translate.';
+  }
+  
+  // Number of translations to generate (plus one for the final selection)
+  const numTranslations = 10;
+  const translations = [];
+  
+  try {
+    console.log('Starting deep translation with', numTranslations, 'variants');
+    
+    // Use a queue system to respect rate limits (10 RPM)
+    for (let i = 0; i < numTranslations; i++) {
+      // Update progress (0-90% for generating translations)
+      if (progressCallback) {
+        progressCallback((i / numTranslations) * 90);
+      }
+      
+      // Modified temperature strategy: Create a more diverse pattern
+      // First set focuses on accuracy with lower temps
+      // Middle set has moderate temps for balance
+      // Last set has higher temps for creativity
+      let temperature;
+      if (i < 3) {
+        // First translations: more conservative (0.1-0.25)
+        temperature = 0.1 + (i * 0.075);
+      } else if (i < 7) {
+        // Middle translations: balanced (0.3-0.5)
+        temperature = 0.3 + ((i - 3) * 0.05);
+      } else {
+        // Final translations: more creative (0.6-0.8)
+        temperature = 0.6 + ((i - 7) * 0.1);
+      }
+      
+      // Vary topK and topP more dramatically for greater diversity
+      const topK = 40 + (i * 8); // Range: 40-112
+      const topP = 0.85 + (i * 0.015); // Range: 0.85-0.995
+      
+      // Create diverse translation prompts
+      let translationPrompt;
+      if (i % 5 === 0) {
+        translationPrompt = `Translate the following text from ${sourceLanguage} to ${targetLanguage} with perfect accuracy and precision. Focus on exact meaning.\n\n${text}`;
+      } else if (i % 5 === 1) {
+        translationPrompt = `Translate the following text from ${sourceLanguage} to ${targetLanguage} with natural flow and readability. Make it sound native.\n\n${text}`;
+      } else if (i % 5 === 2) {
+        translationPrompt = `Translate the following text from ${sourceLanguage} to ${targetLanguage} while preserving tone, style, and nuance.\n\n${text}`;
+      } else if (i % 5 === 3) {
+        translationPrompt = `Translate this from ${sourceLanguage} to ${targetLanguage} with attention to cultural context and idiomatic expressions.\n\n${text}`;
+      } else {
+        translationPrompt = `Provide a ${targetLanguage} translation of this ${sourceLanguage} text that balances accuracy with natural expression.\n\n${text}`;
+      }
+      
+      const requestBody = {
+        contents: [
+          {
+            parts: [
+              {
+                text: translationPrompt
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: temperature,
+          topK: topK,
+          topP: topP,
+          maxOutputTokens: 1024,
+        }
+      };
+      
+      const url = `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`;
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`API error in translation ${i+1}:`, errorText);
+        continue; // Try to continue with other translations
+      }
+      
+      const data = await response.json();
+      const translatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      
+      if (translatedText.trim()) {
+        translations.push(translatedText.trim());
+        console.log(`Generated translation ${i+1} of ${numTranslations} (temp: ${temperature.toFixed(2)})`);
+        
+        // Always update the latest attempt with the latest translation
+        if (progressCallback) {
+          // Pass the progress percentage and the latest translation
+          progressCallback(((i + 1) / numTranslations) * 90, translatedText.trim());
+        }
+      }
+      
+      // Respect rate limits - wait between requests
+      // 6 seconds ensures we stay under 10 RPM limit
+      await new Promise(resolve => setTimeout(resolve, 6000));
+    }
+    
+    // If we couldn't generate any translations, return error
+    if (translations.length === 0) {
+      return 'Failed to generate translations. Please try again.';
+    }
+    
+    // Update progress to 95% before final selection
+    if (progressCallback) {
+      progressCallback(95);
+    }
+    
+    // Final request to select the best translation with a detailed prompt
+    console.log('Selecting best translation from', translations.length, 'options');
+    
+    const selectionRequestBody = {
+      contents: [
+        {
+          parts: [
+            {
+              text: `I have ${translations.length} translations of the same text from ${sourceLanguage} to ${targetLanguage}. 
+              
+Analyze them and select the SINGLE BEST translation that:
+1. Most accurately preserves the original meaning
+2. Sounds natural and fluent in ${targetLanguage}
+3. Maintains the appropriate tone and style
+4. Handles any complex grammatical structures correctly
+5. Correctly translates any idiomatic expressions or cultural references
+
+Original text: 
+"${text}"
+
+Translations:
+${translations.map((t, i) => `Option ${i+1}: ${t}`).join('\n\n')}
+
+Return ONLY the selected best translation, with no explanations, commentary, or option numbers.`
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.1, // Low temperature for deterministic selection
+        maxOutputTokens: 1024,
+      }
+    };
+    
+    const selectionResponse = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectionRequestBody),
+    });
+    
+    // Update progress to 100%
+    if (progressCallback) {
+      // Don't pass a latest attempt here as we're finalizing
+      progressCallback(100);
+    }
+    
+    if (!selectionResponse.ok) {
+      console.error('Selection request failed, returning first translation');
+      return translations[0] || '';
+    }
+    
+    const selectionData = await selectionResponse.json();
+    const bestTranslation = selectionData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    
+    // Try to extract just the translation from the response (clean up any prefixes like "Translation 3:" etc.)
+    const cleanedTranslation = bestTranslation.trim()
+      .replace(/^(Translation\s+\d+:|Option\s+\d+:|#\d+:?)\s*/i, '')
+      .trim();
+    
+    console.log('Deep translation completed successfully');
+    return cleanedTranslation || translations[0] || '';
+  } catch (error) {
+    console.error('Deep translation error:', error);
+    
+    // If there's an error but we have some translations, return the first one
+    if (translations.length > 0) {
+      return translations[0];
+    }
+    throw error;
+  }
+};
+
+/**
  * Detects the language of the provided text using Gemini
  * This is a simplified version and in production would be more sophisticated
  * @param {string} text - Text to detect language for
