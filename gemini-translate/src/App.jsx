@@ -30,7 +30,7 @@ function App() {
   const lastProgressValueRef = useRef(0);
 
   // Available languages
-  const languages = ['detect', 'english', 'spanish', 'chinese', 'latin'];
+  const languages = ['detect', 'english', 'spanish', 'french', 'swedish', 'chinese', 'latin'];
 
   // Check if user has seen the deep translate warning before
   useEffect(() => {

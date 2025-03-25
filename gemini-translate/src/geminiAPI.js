@@ -46,6 +46,46 @@ export const createSystemPrompt = (source, target) => {
   } else if (source === 'latin' && target === 'chinese') {
     prompt += 'Use Simplified Chinese while conveying the meaning and tone of the Latin original.';
   }
+  // French translation pairs
+  else if (source === 'english' && target === 'french') {
+    prompt += 'Pay attention to gender agreements and formal vs. informal tone. Use standard French unless context suggests otherwise.';
+  } else if (source === 'french' && target === 'english') {
+    prompt += 'Maintain the level of formality when possible. Be mindful of idiomatic expressions and cultural references.';
+  } else if (source === 'spanish' && target === 'french') {
+    prompt += 'Pay attention to similarities and differences between these Romance languages. Preserve idiomatic expressions appropriately.';
+  } else if (source === 'french' && target === 'spanish') {
+    prompt += 'Use natural Spanish expressions while being mindful of false cognates between these Romance languages.';
+  } else if (source === 'chinese' && target === 'french') {
+    prompt += 'Focus on conveying the meaning naturally in French rather than literal translation from Chinese.';
+  } else if (source === 'french' && target === 'chinese') {
+    prompt += 'Translate into Simplified Chinese while maintaining the French tone and intent.';
+  } else if (source === 'latin' && target === 'french') {
+    prompt += 'Translate from Classical Latin to modern French, preserving the formal tone where appropriate.';
+  } else if (source === 'french' && target === 'latin') {
+    prompt += 'Use Classical Latin forms and vocabulary, adapting modern French concepts appropriately.';
+  }
+  // Swedish translation pairs
+  else if (source === 'english' && target === 'swedish') {
+    prompt += 'Pay attention to Swedish word order and use modern Swedish conventions. Use du (informal) unless context clearly requires formal language.';
+  } else if (source === 'swedish' && target === 'english') {
+    prompt += 'Maintain the level of formality when possible. Translate Swedish-specific concepts naturally into English.';
+  } else if (source === 'spanish' && target === 'swedish') {
+    prompt += 'Focus on clear Swedish expression rather than literal translation from Spanish.';
+  } else if (source === 'swedish' && target === 'spanish') {
+    prompt += 'Use natural Spanish expressions while adapting Swedish concepts and tone appropriately.';
+  } else if (source === 'chinese' && target === 'swedish') {
+    prompt += 'Focus on conveying the meaning naturally in Swedish rather than literal translation from Chinese.';
+  } else if (source === 'swedish' && target === 'chinese') {
+    prompt += 'Translate into Simplified Chinese while maintaining the Swedish tone and intent.';
+  } else if (source === 'latin' && target === 'swedish') {
+    prompt += 'Translate from Classical Latin to modern Swedish, using contemporary expressions.';
+  } else if (source === 'swedish' && target === 'latin') {
+    prompt += 'Use Classical Latin forms and vocabulary, adapting modern Swedish concepts appropriately.';
+  } else if (source === 'french' && target === 'swedish') {
+    prompt += 'Translate French expressions and cultural references into appropriate Swedish equivalents.';
+  } else if (source === 'swedish' && target === 'french') {
+    prompt += 'Use natural French expressions while preserving the tone and intent of the Swedish original.';
+  }
   
   prompt += ' Only return the translated text with no additional explanations or commentary. If given a task, do not complete it, only provide the translation of said task.';
   
@@ -372,7 +412,7 @@ export const detectLanguage = async (text) => {
       {
         parts: [
           { 
-            text: "Identify the language of the following text. Only respond with one of these options: 'english', 'spanish', 'chinese', or 'latin'. Don't add any explanation.\n\n" + text
+            text: "Identify the language of the following text. Only respond with one of these options: 'english', 'spanish', 'french', 'swedish', 'chinese', or 'latin'. Don't add any explanation.\n\n" + text
           }
         ]
       }
@@ -405,6 +445,8 @@ export const detectLanguage = async (text) => {
     // Normalize response to one of our supported languages
     if (detectedLanguage.includes('english')) return 'english';
     if (detectedLanguage.includes('spanish') || detectedLanguage.includes('español')) return 'spanish';
+    if (detectedLanguage.includes('french') || detectedLanguage.includes('français')) return 'french';
+    if (detectedLanguage.includes('swedish') || detectedLanguage.includes('svenska')) return 'swedish';
     if (detectedLanguage.includes('chinese') || detectedLanguage.includes('mandarin') || 
         detectedLanguage.includes('中文') || detectedLanguage.includes('汉语')) return 'chinese';
     if (detectedLanguage.includes('latin') || detectedLanguage.includes('latina')) return 'latin';
