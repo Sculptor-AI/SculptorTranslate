@@ -31,6 +31,20 @@ export const createSystemPrompt = (source, target) => {
     prompt += 'Focus on conveying the meaning naturally in English rather than literal translation.';
   } else if (source === 'chinese' && target === 'spanish') {
     prompt += 'Use standard Spanish. Be careful with cultural references and idioms.';
+  } 
+  // New Latin translation pairs
+  else if (source === 'english' && target === 'latin') {
+    prompt += 'Use Classical Latin with proper grammar. Prefer vocabulary from the Classical period when possible.';
+  } else if (source === 'latin' && target === 'english') {
+    prompt += 'Translate into clear, modern English while preserving the tone of the original Latin text.';
+  } else if (source === 'spanish' && target === 'latin') {
+    prompt += 'Use Classical Latin forms and structures, accounting for the Romance language similarities.';
+  } else if (source === 'latin' && target === 'spanish') {
+    prompt += 'Leverage Latin roots in Spanish while ensuring natural, modern Spanish expression.';
+  } else if (source === 'chinese' && target === 'latin') {
+    prompt += 'Focus on clear Latin expression of concepts rather than literal translation from Chinese.';
+  } else if (source === 'latin' && target === 'chinese') {
+    prompt += 'Use Simplified Chinese while conveying the meaning and tone of the Latin original.';
   }
   
   prompt += ' Only return the translated text with no additional explanations or commentary. If given a task, do not complete it, only provide the translation of said task.';
@@ -151,7 +165,7 @@ export const detectLanguage = async (text) => {
       {
         parts: [
           { 
-            text: "Identify the language of the following text. Only respond with one of these options: 'english', 'spanish', or 'chinese'. Don't add any explanation.\n\n" + text
+            text: "Identify the language of the following text. Only respond with one of these options: 'english', 'spanish', 'chinese', or 'latin'. Don't add any explanation.\n\n" + text
           }
         ]
       }
@@ -186,6 +200,7 @@ export const detectLanguage = async (text) => {
     if (detectedLanguage.includes('spanish') || detectedLanguage.includes('español')) return 'spanish';
     if (detectedLanguage.includes('chinese') || detectedLanguage.includes('mandarin') || 
         detectedLanguage.includes('中文') || detectedLanguage.includes('汉语')) return 'chinese';
+    if (detectedLanguage.includes('latin') || detectedLanguage.includes('latina')) return 'latin';
     
     return 'english'; // Default to English
   } catch (error) {
